@@ -1,0 +1,22 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.js"></script>
+<script src="script.js"></script>
+
+<body data-ng-app="myApp" data-ng-controller="searchCtrl">
+
+<form name="searchForm" novalidate="" role="form">
+  <label for="leaving_from" data-ng-class="{'error-req': searchForm.leaving_from.$invalid}">From</label>
+  <input type="text" placeholder="City or airport" id="leaving_from" name="leaving_from" data-ng-model="search.leavingFrom" required data-ng-minlength="3">
+
+  <button type="submit" data-ng-click="submitSearch()">submit</button>
+  <button data-ng-click="reset()">reset</button>
+</form>
+
+<div class="errors">
+  <ul data-ng-show="searchForm.submitted">
+    <li data-ng-show="searchForm.leaving_from.$invalid">Departure Airport is invalid</li>
+    <li data-ng-show="searchForm.leaving_from.$error.required">Departure Airport is required</li>
+    <li data-ng-show="searchForm.leaving_from.$error.minlength">Departure Airport should be at least 3 charachters</li>
+  </ul>
+</div>
+
+</body>

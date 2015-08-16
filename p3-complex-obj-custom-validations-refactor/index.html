@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.js"></script>
+<script src="script.js"></script>
+
+<body ng-app="myApp" ng-controller="searchCtrl">
+
+<form name="searchForm" novalidate="" role="form">
+  <!-- Required: out of the box validation -->
+  <label for="leaving_from" data-ng-class="{'error-req': searchForm.submitted &amp;&amp; searchForm.leaving_from.$invalid}">From<span class="ada-hide"> City or airport</span>*</label>
+  <input type="text" placeholder="City or airport" id="leaving_from" name="leaving_from"
+         data-ng-model="search.leavingFrom" required data-ng-minlength="3"
+         my-validate-airport-code>
+  <br />
+
+  <!-- Applying the directive to the model holding all parts of the date -->
+  <div data-my-birth-date data-my-validate-birth-date data-ng-model="search.dateOfBirth"></div>
+
+  <br />
+
+  <button type="submit" data-ng-click="submitSearch()">submit</button>
+  <button data-ng-click="reset()">reset</button>
+</form>
+<div class="errors">
+  <!-- We use submitted to hide all error msgs until its actually submitted-->
+  <ul ng-show="searchForm.submitted">
+    <li data-ng-show="searchForm.leaving_from.$invalid">Departure Airport is invalid</li>
+    <li data-ng-show="searchForm.leaving_from.$error.required">Departure Airport is required</li>
+    <li data-ng-show="searchForm.leaving_from.$error.minlength">Departure Airport should be at least 3 charachters</li>
+    <li data-ng-show="searchForm.leaving_from.$error.invalidAiportCode">Airport Code should start with letter A</li>
+    <li ng-show="searchForm.$error.incompleteDateOfBirth">Incomplete Date of Birth</li>
+    <li ng-show="searchForm.$error.invalidDateOfBith">Invalid Date of Birth</li>
+    <li ng-show="searchForm.$error.minorDateOfBirth">Must be an adult</li>
+  </ul>
+</div>
+
+<pre>{{search | json}}</pre>
+</body>
